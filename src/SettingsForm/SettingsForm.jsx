@@ -55,7 +55,7 @@ const useStyles = makeStyles({
     },
 })
 
-const SettingsForm = ({ formState, setFormState, inputValue, setInputValue, setAdditionalSymbols, setOfSymbols, setSetOfSymbols }) => {
+const SettingsForm = ({ formState, setFormState, inputValue, setInputValue, setAdditionalSymbols, setOfSymbols }) => {
     const classes = useStyles()
 
     const handleChangeCheckbox = (e) => {
