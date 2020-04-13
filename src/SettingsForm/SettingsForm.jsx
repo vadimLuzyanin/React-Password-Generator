@@ -65,7 +65,6 @@ const SettingsForm = ({ formState, setFormState, inputValue, setInputValue, setA
     const handleChangeInputExtraSymbols = (e) => {
         const lastChar = e.target.value[e.target.value.length - 1];
         const currentLength = e.target.value.length;
-        console.log(currentLength)
         if (!setOfSymbols.has(lastChar)) {
             setInputValue((prev) => {
                 if (prev.length > currentLength) {
