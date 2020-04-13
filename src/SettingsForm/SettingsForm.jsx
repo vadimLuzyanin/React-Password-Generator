@@ -44,6 +44,7 @@ const useStyles = makeStyles({
     extraSymbolsField: {
         display: 'flex',
         flexDirection: 'row',
+        alignItems: 'center',
         marginBottom: '25px'
     },
     extraSymbolsInput: {
@@ -54,19 +55,28 @@ const useStyles = makeStyles({
     },
 })
 
-const SettingsForm = ({ formState, setFormState, inputValue, setInputValue, setAdditionalSymbols, setOfSymbols }) => {
+const SettingsForm = ({ formState, setFormState, inputValue, setInputValue, setAdditionalSymbols, setOfSymbols, setSetOfSymbols }) => {
     const classes = useStyles()
 
     const handleChangeCheckbox = (e) => {
         setFormState({ ...formState, [e.target.name]: e.target.checked });
     };
 
-    const [inputSet, setInputSet] = useState(new Set(setOfSymbols))
-
     const handleChangeInputExtraSymbols = (e) => {
-        if (!inputSet.has(e.target.value[e.target.value.length - 1])) {
-            setInputSet((prev) => prev.add(e.target.value[e.target.value.length - 1]));
-            setInputValue(Array.from(inputSet).filter((item) => !setOfSymbols.has(item)).join(''));
+        const lastChar = e.target.value[e.target.value.length - 1];
+        const currentLength = e.target.value.length;
+        console.log(currentLength)
+        if (!setOfSymbols.has(lastChar)) {
+            setInputValue((prev) => {
+                if (prev.length > currentLength) {
+                    const diff = prev.length - currentLength;
+                    return prev.slice(0, prev.length - diff)
+                } else if (prev.indexOf(lastChar) === -1) {
+                    return prev + lastChar
+                } else {
+                    return prev;
+                }
+            })
         }
     }
 
@@ -155,7 +165,7 @@ const SettingsForm = ({ formState, setFormState, inputValue, setInputValue, setA
                         onChange={handleChangeInputExtraSymbols}
                     />
                 </FormControl>
-                <Button className={classes.extraSymbolsButton} variant='contained' color='secondary' type='submit'>Add</Button>
+                <Button className={classes.extraSymbolsButton} variant='contained' color='secondary' type='submit'>Change set of extra symbols</Button>
             </form>
         </Box>
     )
